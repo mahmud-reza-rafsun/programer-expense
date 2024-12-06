@@ -1,13 +1,50 @@
+let count = 0;
+
+// make document using function
+function getInputValueById(id){
+    return parseFloat(document.getElementById(id).value);
+}
 // add event listiner for calculate button
 const calculateButton = document.getElementById('calculate');
 calculateButton.addEventListener('click', function(){
-    const income = parseFloat(document.getElementById('income').value);
-    const software = parseFloat(document.getElementById('software').value);
-    const courses = parseFloat(document.getElementById('courses').value);
-    const internet = parseFloat(document.getElementById('internet').value);
+    count += 1;
+    // const income = parseFloat(document.getElementById('income').value);
+    // const software = parseFloat(document.getElementById('software').value);
+    // const courses = parseFloat(document.getElementById('courses').value);
+    // const internet = parseFloat(document.getElementById('internet').value);
+
+    // using function
+
+    const income = getInputValueById('income');
+    const software = getInputValueById('software');
+    const courses = getInputValueById('courses');
+    const internet = getInputValueById('internet');
+
+
+    if(income <= 0 || isNaN(income)){
+        document.getElementById('income-error').classList.remove('hidden');
+        return;
+    }
+    if(software <= 0 || isNaN(software)){
+        document.getElementById('income-error').classList.remove('hidden');
+        return;
+    }
+    if(courses <= 0 || isNaN(courses)){
+        document.getElementById('income-error').classList.remove('hidden');
+        return;
+    }
+    if(internet <= 0 || isNaN(internet)){
+        document.getElementById('income-error').classList.remove('hidden');
+        return;
+    }
+
     
     const totalExpenses = software + courses + internet;
     const balance = income - totalExpenses;
+
+    if(totalExpenses > income){
+        document.getElementById('logic-error').classList.remove('hidden');
+    }
 
     const totalExpensesElement = document.getElementById('total-expenses');
     totalExpensesElement.innerText = totalExpenses.toFixed(2);
@@ -24,6 +61,7 @@ calculateButton.addEventListener('click', function(){
     historyItems.className = 'bg-white p-3 rounded-md border-l-2 border-indigo-500';
 
     historyItems.innerHTML = `
+        <p class="text-xs font-bold text-rose-500">Invoice:-${count}</p>
         <p class="text-xs text-gray-500">${new Date().toLocaleDateString()}</p>
         <p class="text-xs font-bold">Income: ${income.toFixed(2)}</p>
         <p class="text-xs text-gray-500">Expenses: ${totalExpenses.toFixed(2)}</p>
@@ -38,6 +76,11 @@ calculateButton.addEventListener('click', function(){
 const calculateSavingButton = document.getElementById('calculate-savings');
 calculateSavingButton.addEventListener('click', function(){
     const savingsParcentage = parseFloat(document.getElementById('savings').value);
+    
+    if(savingsParcentage <= 0 || isNaN(savingsParcentage)){
+        document.getElementById('savings-error').classList.remove('hidden');
+        return;
+    }
 
     const income = parseFloat(document.getElementById('income').value);
     const software = parseFloat(document.getElementById('software').value);
@@ -101,3 +144,6 @@ assistantTab.addEventListener('click', function(){
     document.getElementById('expense-form').classList.remove('hidden');
     document.getElementById('history-section').classList.add('hidden');
 })
+
+// input field validation
+
