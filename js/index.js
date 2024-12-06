@@ -4,6 +4,11 @@ let count = 0;
 function getInputValueById(id){
     return parseFloat(document.getElementById(id).value);
 }
+
+function showError(id){
+    return document.getElementById(id).classList.remove('hidden');
+}
+
 // add event listiner for calculate button
 const calculateButton = document.getElementById('calculate');
 calculateButton.addEventListener('click', function(){
@@ -22,19 +27,19 @@ calculateButton.addEventListener('click', function(){
 
 
     if(income <= 0 || isNaN(income)){
-        document.getElementById('income-error').classList.remove('hidden');
+        showError('income-error');
         return;
     }
     if(software <= 0 || isNaN(software)){
-        document.getElementById('income-error').classList.remove('hidden');
+        showError('software-error');
         return;
     }
     if(courses <= 0 || isNaN(courses)){
-        document.getElementById('income-error').classList.remove('hidden');
+        showError('courses-error');
         return;
     }
     if(internet <= 0 || isNaN(internet)){
-        document.getElementById('income-error').classList.remove('hidden');
+        showError('internet-error');
         return;
     }
 
@@ -43,7 +48,8 @@ calculateButton.addEventListener('click', function(){
     const balance = income - totalExpenses;
 
     if(totalExpenses > income){
-        document.getElementById('logic-error').classList.remove('hidden');
+        showError('logic-error');
+        return;
     }
 
     const totalExpensesElement = document.getElementById('total-expenses');
@@ -78,7 +84,7 @@ calculateSavingButton.addEventListener('click', function(){
     const savingsParcentage = parseFloat(document.getElementById('savings').value);
     
     if(savingsParcentage <= 0 || isNaN(savingsParcentage)){
-        document.getElementById('savings-error').classList.remove('hidden');
+        showError('savings-error');
         return;
     }
 
@@ -125,7 +131,7 @@ historyTab.addEventListener('click', function(){
     )
     assistantTab.classList.add('text-gray-600');
     document.getElementById('expense-form').classList.add('hidden');
-    document.getElementById('history-section').classList.remove('hidden');
+    showError('history-section');
 });
 
 assistantTab.addEventListener('click', function(){
@@ -135,12 +141,14 @@ assistantTab.addEventListener('click', function(){
         "from-blue-500",
         "to-purple-600",
     )
+    historyTab.classList.add('text-gray-600');
     historyTab.classList.remove(
         "text-white",
         "bg-gradient-to-r",
         "from-blue-500",
         "to-purple-600",
     )
+    historyTab.classList.add('text-gray-600');
     document.getElementById('expense-form').classList.remove('hidden');
     document.getElementById('history-section').classList.add('hidden');
 })
